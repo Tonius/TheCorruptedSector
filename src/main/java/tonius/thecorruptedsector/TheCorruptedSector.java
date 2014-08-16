@@ -1,12 +1,12 @@
 package tonius.thecorruptedsector;
 
-import net.minecraft.item.Item;
+import net.minecraft.block.Block;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Logger;
 
-import tonius.thecorruptedsector.item.ItemMiningTest;
+import tonius.thecorruptedsector.block.BlockMiningPortal;
 import tonius.thecorruptedsector.world.MiningWorldEvents;
 import tonius.thecorruptedsector.world.WorldProviderMining;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -25,18 +25,18 @@ public class TheCorruptedSector {
 
     public static Logger log;
 
-    public static Item miningTest = null;
+    public static Block miningPortal = null;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt) {
         log = evt.getModLog();
 
-        miningTest = new ItemMiningTest();
+        miningPortal = new BlockMiningPortal();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent evt) {
-        GameRegistry.registerItem(miningTest, "miningTest");
+        GameRegistry.registerBlock(miningPortal, "miningPortal");
 
         DimensionManager.registerProviderType(15, WorldProviderMining.class, false);
         DimensionManager.registerDimension(15, 15);
