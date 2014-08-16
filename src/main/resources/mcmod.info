@@ -1,0 +1,17 @@
+[
+{
+  "modid": "thecorruptedsector",
+  "name": "The Corrupted Sector",
+  "description": "A Forge-based 'corrupted world'-themed mining world mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "logoFile": "",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["tonius11"],
+  "credits": "Pathaleon",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
