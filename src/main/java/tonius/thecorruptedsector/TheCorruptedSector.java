@@ -36,6 +36,7 @@ public class TheCorruptedSector {
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt) {
         logger = evt.getModLog();
+        logger.info("Starting The Corrupted Sector");
 
         TCSConfig.preInit(evt);
 
