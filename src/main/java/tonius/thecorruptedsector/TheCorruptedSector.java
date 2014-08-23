@@ -7,6 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import org.apache.logging.log4j.Logger;
 
 import tonius.thecorruptedsector.block.BlockMiningPortal;
+import tonius.thecorruptedsector.block.TileEntityMiningPortal;
 import tonius.thecorruptedsector.world.MiningWorldEvents;
 import tonius.thecorruptedsector.world.WorldProviderMining;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -37,6 +38,7 @@ public class TheCorruptedSector {
     @EventHandler
     public void init(FMLInitializationEvent evt) {
         GameRegistry.registerBlock(miningPortal, "miningPortal");
+        GameRegistry.registerTileEntity(TileEntityMiningPortal.class, "TheCorruptedSector.miningPortal");
 
         DimensionManager.registerProviderType(15, WorldProviderMining.class, false);
         DimensionManager.registerDimension(15, 15);

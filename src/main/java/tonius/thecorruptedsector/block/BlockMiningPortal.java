@@ -3,17 +3,19 @@ package tonius.thecorruptedsector.block;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tonius.thecorruptedsector.TheCorruptedSector;
-import tonius.thecorruptedsector.world.TeleporterBasic;
+import tonius.thecorruptedsector.util.TeleportUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockMiningPortal extends Block {
+public class BlockMiningPortal extends Block implements ITileEntityProvider {
 
     public BlockMiningPortal() {
         super(Material.rock);
@@ -27,14 +29,12 @@ public class BlockMiningPortal extends Block {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float offsetX, float offsetY, float offsetZ) {
-        if (!world.isRemote) {
-            if (player.dimension != 15) {
-                ((EntityPlayerMP) player).mcServer.getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) player, 15, new TeleporterBasic(((EntityPlayerMP) player).mcServer.worldServerForDimension(15)));
-            } else {
-                ((EntityPlayerMP) player).mcServer.getConfigurationManager().transferPlayerToDimension((EntityPlayerMP) player, 0, new TeleporterBasic(((EntityPlayerMP) player).mcServer.worldServerForDimension(0)));
-            }
+        if (player.dimension == 0 || player.dimension == 15) {
+            if (!world.isRemote)
+                TeleportUtils.teleportPlayerToMiningWorld((EntityPlayerMP) player, player.dimension == 15, true);
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -50,6 +50,11 @@ public class BlockMiningPortal extends Block {
             particleZ = (z + 0.5D) + (rand.nextDouble() * 1.2D - 0.6D);
             world.spawnParticle("blockcrack_" + Block.getIdFromBlock(TheCorruptedSector.miningPortal) + "_0", particleX, particleY, particleZ, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta) {
+        return new TileEntityMiningPortal();
     }
 
 }
