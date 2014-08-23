@@ -21,6 +21,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import tonius.thecorruptedsector.TheCorruptedSector;
 import tonius.thecorruptedsector.block.TileEntityMiningPortal;
+import tonius.thecorruptedsector.config.TCSConfig;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class TeleportUtils {
@@ -42,7 +43,7 @@ public class TeleportUtils {
     }
 
     public static void teleportPlayerToMiningWorld(EntityPlayerMP player, boolean backToOverworld, boolean spawnPortalBlock) {
-        int toDim = backToOverworld ? 0 : 15;
+        int toDim = backToOverworld ? 0 : TCSConfig.dimensionID;
         ChunkCoordinates coords = new ChunkCoordinates((int) player.posX, (int) player.posY, (int) player.posZ);
         World world = player.mcServer.worldServerForDimension(toDim);
         coords = findOrCreatePortal(world, coords, spawnPortalBlock);

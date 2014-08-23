@@ -2,14 +2,14 @@
 {
   "modid": "thecorruptedsector",
   "name": "The Corrupted Sector",
-  "description": "A Forge-based 'corrupted world'-themed mining world mod",
+  "description": "A Forge-based 'corrupted world'-themed mining world mod. Provides a new dimension that exists to be wrecked, destroyed and drained of resources.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "logoFile": "",
   "url": "",
   "updateUrl": "",
   "authorList": ["tonius11"],
-  "credits": "Pathaleon",
+  "credits": "Machir, Pathaleon",
   "parent": "",
   "screenshots": [],
   "dependencies": []

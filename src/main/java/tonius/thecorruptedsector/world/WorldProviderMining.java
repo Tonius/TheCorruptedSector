@@ -5,12 +5,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.ForgeHooksClient;
+import tonius.thecorruptedsector.config.TCSConfig;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class WorldProviderMining extends WorldProvider {
-
-    // TODO seed offset config option
 
     @Override
     protected void registerWorldChunkManager() {
@@ -29,9 +28,18 @@ public class WorldProviderMining extends WorldProvider {
 
     @Override
     public float calculateCelestialAngle(long worldTime, float partialTicks) {
-        // TODO config options for eternal day/night or normal cycle
-        int temp = (int) (worldTime % 24000L);
-        return (float) (Math.cos((temp + partialTicks) * (10F / 60000F) * Math.PI) * 0.3F + 0.5F);
+        int temp;
+        switch (TCSConfig.dayNightCycleMode) {
+        default:
+        case NORMAL:
+            return super.calculateCelestialAngle(worldTime, partialTicks);
+        case ETERNAL_DAY:
+            temp = (int) (worldTime % 24000L);
+            return (float) (Math.cos((temp + partialTicks) * (10F / 60000F) * Math.PI) * 0.2F);
+        case ETERNAL_NIGHT:
+            temp = (int) (worldTime % 24000L);
+            return (float) (Math.cos((temp + partialTicks) * (10F / 60000F) * Math.PI) * 0.2F + 0.5F);
+        }
     }
 
     @Override
@@ -42,7 +50,9 @@ public class WorldProviderMining extends WorldProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public float getCloudHeight() {
-        return Float.MAX_VALUE;
+        if (!TCSConfig.clouds)
+            return Float.MAX_VALUE;
+        return super.getCloudHeight();
     }
 
     @Override
@@ -116,7 +126,11 @@ public class WorldProviderMining extends WorldProvider {
 
     @Override
     public String getDimensionName() {
-        return "Corrupted Sector";
+        return "The Corrupted Sector";
+    }
+
+    public static enum DayNightCycleMode {
+        NORMAL, ETERNAL_DAY, ETERNAL_NIGHT
     }
 
 }

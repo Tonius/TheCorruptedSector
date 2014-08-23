@@ -1,1 +1,7 @@
 tile.thecorruptedsector.miningPortal.name=Glitch Rift
+
+thecorruptedsector.config.title=The Corrupted Sector Configuration
+thecorruptedsector.config.worldProps=World Properties
+thecorruptedsector.config.worldProps.tooltip=Basic settings of the Corrupted Sector dimension.
+thecorruptedsector.config.worldCorruptness=World Corruptness
+thecorruptedsector.config.worldCorruptness.tooltip=Settings that determine how corrupt the Corrupted Sector looks.

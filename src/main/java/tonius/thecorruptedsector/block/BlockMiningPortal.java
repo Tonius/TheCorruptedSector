@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import tonius.thecorruptedsector.TheCorruptedSector;
+import tonius.thecorruptedsector.config.TCSConfig;
 import tonius.thecorruptedsector.util.TeleportUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,9 +30,9 @@ public class BlockMiningPortal extends Block implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float offsetX, float offsetY, float offsetZ) {
-        if (player.dimension == 0 || player.dimension == 15) {
+        if (player.dimension == 0 || player.dimension == TCSConfig.dimensionID) {
             if (!world.isRemote)
-                TeleportUtils.teleportPlayerToMiningWorld((EntityPlayerMP) player, player.dimension == 15, true);
+                TeleportUtils.teleportPlayerToMiningWorld((EntityPlayerMP) player, player.dimension == TCSConfig.dimensionID, true);
             return true;
         }
         return false;
