@@ -69,6 +69,7 @@ public class TeleportUtils {
                             float distance = coords.getDistanceSquaredToChunkCoordinates(teleportCoords);
                             if (distance < closestDistance) {
                                 closest = teleportCoords;
+                                closestDistance = distance;
                             }
                         }
                     }
