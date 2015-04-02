@@ -12,7 +12,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.relauncher.Side;
 
 public class MiningWorldEvents {
-
+    
     @SubscribeEvent
     public void tryTeleportToOverworld(PlayerTickEvent evt) {
         if (evt.side == Side.SERVER) {
@@ -23,19 +23,20 @@ public class MiningWorldEvents {
             }
         }
     }
-
+    
     @SubscribeEvent
     public void replaceBiomeBlocks(ReplaceBiomeBlocks evt) {
         if (evt.chunkProvider instanceof ChunkProviderMining) {
             Random random = ((ChunkProviderMining) evt.chunkProvider).getRNG();
             if (TCSConfig.worldHoles && random.nextInt(TCSConfig.worldHoleRarity) == 0) {
                 evt.setResult(Result.DENY);
-                for (int i = 0; i < evt.blockArray.length; i++)
+                for (int i = 0; i < evt.blockArray.length; i++) {
                     evt.blockArray[i] = null;
+                }
             } else if (TCSConfig.barrenChunks && random.nextInt(TCSConfig.barrenChunkRarity) == 0) {
                 evt.setResult(Result.DENY);
             }
         }
     }
-
+    
 }

@@ -25,36 +25,39 @@ import tonius.thecorruptedsector.config.TCSConfig;
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class TeleportUtils {
-
+    
     public static boolean teleportPlayerToPos(EntityPlayerMP player, int dimension, int posX, int posY, int posZ, boolean simulate) {
-        if (!DimensionManager.isDimensionRegistered(dimension))
+        if (!DimensionManager.isDimensionRegistered(dimension)) {
             return false;
-
+        }
+        
         if (!simulate) {
             player.mountEntity(null);
-            if (player.riddenByEntity != null)
+            if (player.riddenByEntity != null) {
                 player.riddenByEntity.mountEntity(null);
-            if (player.dimension != dimension)
+            }
+            if (player.dimension != dimension) {
                 teleportPlayerToDimension(player, dimension, player.mcServer.getConfigurationManager());
+            }
             player.setPositionAndUpdate(posX + 0.5D, posY + 0.5D, posZ + 0.5D);
         }
-
+        
         return true;
     }
-
+    
     public static void teleportPlayerToMiningWorld(EntityPlayerMP player, boolean backToOverworld, boolean spawnPortalBlock) {
         int toDim = backToOverworld ? 0 : TCSConfig.dimensionID;
         ChunkCoordinates coords = new ChunkCoordinates((int) player.posX, (int) player.posY, (int) player.posZ);
         World world = player.mcServer.worldServerForDimension(toDim);
         coords = findOrCreatePortal(world, coords, spawnPortalBlock);
-
+        
         player.mountEntity(null);
         if (player.riddenByEntity != null) {
             player.riddenByEntity.mountEntity(null);
         }
         teleportPlayerToPos(player, toDim, coords.posX, coords.posY, coords.posZ, false);
     }
-
+    
     public static ChunkCoordinates findOrCreatePortal(World world, ChunkCoordinates coords, boolean spawnPortalBlock) {
         ChunkCoordinates closest = null;
         float closestDistance = Float.MAX_VALUE;
@@ -76,47 +79,49 @@ public class TeleportUtils {
                 }
             }
         }
-        if (closest != null)
+        if (closest != null) {
             return closest;
-
+        }
+        
         coords.posY = world.getActualHeight();
         Material mat;
         do {
             mat = world.getBlock(coords.posX, coords.posY, coords.posZ).getMaterial();
             if (mat.isSolid() || mat.isLiquid() || coords.posY <= 2) {
-                if (spawnPortalBlock || !World.doesBlockHaveSolidTopSurface(world, coords.posX, coords.posY, coords.posZ))
+                if (spawnPortalBlock || !World.doesBlockHaveSolidTopSurface(world, coords.posX, coords.posY, coords.posZ)) {
                     world.setBlock(coords.posX, coords.posY + 1, coords.posZ, spawnPortalBlock ? TheCorruptedSector.miningPortal : Blocks.cobblestone);
+                }
                 break;
             }
             coords.posY--;
         } while (!mat.isSolid() && !mat.isLiquid());
         coords.posY += 2;
-
+        
         return coords;
     }
-
+    
     public static void teleportEntityToWorld(Entity entity, WorldServer oldWorld, WorldServer newWorld) {
         WorldProvider pOld = oldWorld.provider;
         WorldProvider pNew = newWorld.provider;
         double moveFactor = pOld.getMovementFactor() / pNew.getMovementFactor();
         double x = entity.posX * moveFactor;
         double z = entity.posZ * moveFactor;
-
+        
         oldWorld.theProfiler.startSection("placing");
         x = MathHelper.clamp_double(x, -29999872, 29999872);
         z = MathHelper.clamp_double(z, -29999872, 29999872);
-
+        
         if (entity.isEntityAlive()) {
             entity.setLocationAndAngles(x, entity.posY, z, entity.rotationYaw, entity.rotationPitch);
             newWorld.spawnEntityInWorld(entity);
             newWorld.updateEntityWithOptionalForce(entity, false);
         }
-
+        
         oldWorld.theProfiler.endSection();
-
+        
         entity.setWorld(newWorld);
     }
-
+    
     public static void teleportPlayerToDimension(EntityPlayerMP player, int dimension, ServerConfigurationManager manager) {
         int oldDim = player.dimension;
         WorldServer worldserver = manager.getServerInstance().worldServerForDimension(player.dimension);
@@ -132,12 +137,12 @@ public class TeleportUtils {
         manager.updateTimeAndWeatherForPlayer(player, worldserver1);
         manager.syncPlayerInventory(player);
         Iterator<PotionEffect> iterator = player.getActivePotionEffects().iterator();
-
+        
         while (iterator.hasNext()) {
             PotionEffect potioneffect = iterator.next();
             player.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(player.getEntityId(), potioneffect));
         }
         FMLCommonHandler.instance().firePlayerChangedDimensionEvent(player, oldDim, dimension);
     }
-
+    
 }
