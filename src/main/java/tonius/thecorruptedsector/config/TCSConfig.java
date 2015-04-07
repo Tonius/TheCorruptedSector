@@ -79,11 +79,11 @@ public class TCSConfig {
         clouds = config.get(sectionWorldProps.name, "Clouds", clouds_default, "Whether the Corrupted Sector has clouds.").getBoolean(clouds_default);
         
         worldHoles = config.get(sectionWorldCorruptness.name, "World Holes", worldHoles_default, "If enabled, holes to the void will generate. These can be jumped into to teleport back to the Overworld as a last resort.").getBoolean(worldHoles_default);
-        worldHoleRarity = config.get(sectionWorldCorruptness.name, "World Hole Rarity", worldHoleRarity_default, "The rarity of world holes, if they are enabled. Every 1 in [rarity] chunks will be a world hole.").setMinValue(0).getInt(worldHoleRarity_default);
+        worldHoleRarity = config.get(sectionWorldCorruptness.name, "World Hole Rarity", worldHoleRarity_default, "The rarity of world holes, if they are enabled. Every 1 in [rarity] chunks will be a world hole.").setMinValue(1).getInt(worldHoleRarity_default);
         barrenChunks = config.get(sectionWorldCorruptness.name, "Barren Chunks", barrenChunks_default, "If enabled, barren chunks will generate. Barren chunks are chunks without any grass, trees, etc.").getBoolean(barrenChunks_default);
-        barrenChunkRarity = config.get(sectionWorldCorruptness.name, "Barren Chunk Rarity", barrenChunkRarity_default, "The rarity of barren chunks, if they are enabled. Every 1 in [rarity] chunks will be a barren chunk.").setMinValue(0).getInt(barrenChunkRarity_default);
+        barrenChunkRarity = config.get(sectionWorldCorruptness.name, "Barren Chunk Rarity", barrenChunkRarity_default, "The rarity of barren chunks, if they are enabled. Every 1 in [rarity] chunks will be a barren chunk.").setMinValue(1).getInt(barrenChunkRarity_default);
         scrambledChunks = config.get(sectionWorldCorruptness.name, "Scrambled Chunks", scrambledChunks_default, "If enabled, some chunks will be scrambled around with nearby chunks, causing visible chunk edges. This is the most obvious corruptness effect.").getBoolean(scrambledChunks_default);
-        scrambledChunkRarity = config.get(sectionWorldCorruptness.name, "Scrambled Chunk Rarity", scrambledChunkRarity_default, "The rarity of scrambled chunks, if they are enabled. Every 1 in [rarity] chunks will be a scrambled chunk.").setMinValue(0).getInt(scrambledChunkRarity_default);
+        scrambledChunkRarity = config.get(sectionWorldCorruptness.name, "Scrambled Chunk Rarity", scrambledChunkRarity_default, "The rarity of scrambled chunks, if they are enabled. Every 1 in [rarity] chunks will be a scrambled chunk.").setMinValue(1).getInt(scrambledChunkRarity_default);
     }
     
     public static class ConfigSection {
